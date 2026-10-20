@@ -1,0 +1,9 @@
+# Minimal runtime image for the static server binary.
+# No shell, no package manager, no external dependencies.
+# Build on the router:
+#   docker build -f Dockerfile.scratch -t wakecomputer:0.1.0 .
+FROM scratch
+
+COPY wakecomputer-linux-amd64 /app/wakecomputer
+
+ENTRYPOINT ["/app/wakecomputer"]

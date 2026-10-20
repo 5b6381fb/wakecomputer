@@ -1,0 +1,9 @@
+# Runtime-only image built from a locally cross-compiled static binary.
+# Use this on OpenWrt when Docker BuildKit/Go is not available on the router.
+FROM gcr.io/distroless/static-debian12:nonroot
+
+COPY dist/wakecomputer-linux-amd64 /app/wakecomputer
+
+USER nonroot:nonroot
+EXPOSE 8085
+ENTRYPOINT ["/app/wakecomputer"]

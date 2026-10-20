@@ -1,0 +1,7 @@
+.git
+data
+android
+scripts
+*.md
+.env
+.localdata

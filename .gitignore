@@ -1,0 +1,33 @@
+# secrets and local runtime
+.env
+*.local
+.localdata/
+data/
+*.db
+*.db-wal
+*.db-shm
+
+# Go / release artifacts
+dist/
+build/
+bin/
+*.exe
+
+# Android
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+android/.idea/
+android/captures/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# IDE and OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
