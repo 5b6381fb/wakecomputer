@@ -1,8 +1,8 @@
 # secrets and local runtime
 .env
 *.local
-.localdata/
-data/
+/.localdata/
+/data/
 *.db
 *.db-wal
 *.db-shm

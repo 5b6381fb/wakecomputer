@@ -216,6 +216,8 @@ Authorization: Bearer <agentToken>
 | 访问令牌 | JWT HS256，`sub=userId`，`jti`，15 min；`Authorization: Bearer` |
 | 刷新令牌 | 32B 随机，SHA-256 入库，30 天，旋转（旧令牌立即失效）；重放检测 → 吊销该设备全部会话 |
 | 存储 | Android 侧用 Keystore AES-GCM 加密后写入 DataStore；服务端只存哈希 |
+| 客户端会话 | 启动时用刷新令牌恢复会话。只有服务端明确返回 `401/403` 才清除登录态；超时、DNS 失败、5xx 都保留会话，进入缓存视图并等待自动重连 |
+| 记住密码 | 登录页可勾选，默认开启。密码用 Keystore AES-GCM 加密后存在 DataStore，与刷新令牌分开；退出登录不清除 |
 | 限流 | 进程内令牌桶：登录 5/min/IP + 20/h/账号；全局 600/min/IP；批量 10/min |
 | 锁定 | 连续 5 次失败锁 15 min，审计记录 |
 | 传输 | 反代终止 TLS（TLS1.2+），HSTS；容器内 HTTP 仅监听内网 |

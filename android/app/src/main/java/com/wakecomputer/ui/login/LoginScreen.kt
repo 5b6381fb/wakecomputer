@@ -1,6 +1,7 @@
 package com.wakecomputer.ui.login
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -134,6 +136,22 @@ fun LoginScreen(container: AppContainer, onLoggedIn: () -> Unit) {
                     vm.login(onLoggedIn)
                 })
             )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = vm.rememberPassword,
+                    onCheckedChange = vm::onRememberChange
+                )
+                Text(
+                    text = "记住密码",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.clickable { vm.onRememberChange(!vm.rememberPassword) }
+                )
+            }
 
             if (vm.error != null) {
                 Spacer(Modifier.height(14.dp))

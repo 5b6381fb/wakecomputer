@@ -4,7 +4,8 @@ Android 多主机远程开关机系统：标准 Wake-on-LAN 开机 + 轻量 Agen
 
 - **服务端**：Go 单二进制 + SQLite，单容器，常驻内存 < 80 MB
 - **Agent**：Windows 服务 / Linux systemd，mTLS + 证书指纹固定，仅监听内网 `:45871`
-- **App**：Kotlin + Jetpack Compose，Material 3，深色/浅色，批量操作
+- **App**：Kotlin + Jetpack Compose，Material 3，深色/浅色，批量操作，记住密码
+- **离线可用**：网络中断时保留登录态并显示缓存，恢复后自动重连，不用重输密码
 - **局域网扫描**：服务端读取 ARP + NetBIOS 名称，添加主机时可一键选择设备
 - **外网**：复用 Lucky 既有 443/8443，仅新增 `wake.example.com` 子规则
 

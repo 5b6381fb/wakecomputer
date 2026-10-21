@@ -14,6 +14,8 @@ class LoginViewModel(private val repo: Repository) : ViewModel() {
     var host by mutableStateOf("")
     var username by mutableStateOf("admin")
     var password by mutableStateOf("")
+    var rememberPassword by mutableStateOf(true)
+        private set
     var loading by mutableStateOf(false)
         private set
     var error by mutableStateOf<String?>(null)
@@ -22,7 +24,16 @@ class LoginViewModel(private val repo: Repository) : ViewModel() {
     init {
         viewModelScope.launch {
             repo.serverUrl()?.let { applySavedServer(it) }
+            repo.savedCredentials()?.let { (savedUser, savedPassword) ->
+                username = savedUser
+                password = savedPassword
+                rememberPassword = true
+            }
         }
+    }
+
+    fun onRememberChange(value: Boolean) {
+        rememberPassword = value
     }
 
     fun onHostChange(raw: String) {
@@ -56,6 +67,11 @@ class LoginViewModel(private val repo: Repository) : ViewModel() {
         viewModelScope.launch {
             try {
                 repo.login(target, username, password)
+                if (rememberPassword) {
+                    repo.rememberCredentials(username.trim(), password)
+                } else {
+                    repo.forgetCredentials()
+                }
                 onSuccess()
             } catch (e: AppError) {
                 error = e.message
